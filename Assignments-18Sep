@@ -1,0 +1,36 @@
+
+Assigments:
+=========================
+
+1. if you want to delete only file from local repo and not from working directory
+     > git rm --cached filename
+     > git status
+
+2. Create new files in remote repo and fetch the changes to local
+     > git fetch origin master
+The fetch will download all the recent changes, but it will not put it in your current checked out code (working area).
+
+Add 1 file to working directory and commit to local repo
+
+    > git checkout origin/master -- path/to/file
+    > git status
+    > git commit -m "done"
+
+The checkout will update the working tree with the particular file from the downloaded changes (origin/master).
+
+3. Single Command to create a new branch and also switch to the branch
+
+   > git checkout -b feature2
+
+4. find out with is -D in this below command
+
+   > git branch -D feature1
+
+
+
+
+
+
+
+
+

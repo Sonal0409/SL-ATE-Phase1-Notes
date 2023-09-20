@@ -1,0 +1,668 @@
+
+become a root user:
+
+# sudo su -
+
+Create a working directory[folder]
+
+# mkdir myproject
+
+Go inside the directory
+
+# cd myproject
+
+create empty files
+
+# touch file1.java file2.java
+
+Create a local repo
+
+# git init
+
+===================================================
+
+git configurations:
+
+git config --global user.name sonal
+
+
+git config --global user.email sonal@gmail.com
+
+
+Configurations are of 3 types:
+================================
+
+Config Variables: user.name and user.email
+
+Local: The configuration when set with flag a local, the config variable will be application only to that particulr repository
+
+Global : The configuration when set with flag as global, the config variable will be application to every repository created by current user logged in the machine
+
+System : The configuration when set with flag as system, the config variable will be application to every repository created by every user logged in the machine
+
+
+Assignment:
+=====================
+
+Remove the configurations:
+
+==========================
+git config --global --unset user.name
+
+git config --global --unset user.email
+
+
+Find out the file/location where the git configuration are saved:
+================================
+
+local:
+
+global: cat ~/.gitconfig
+
+system: 
+
+
+========================================
+Adding a file to Local repo
+=====================================
+
+# git status
+
+# git add .
+
+OR
+
+# git add -a  // add all the files
+
+# git status
+
+# git commit -m "added file file1 and file2"
+
+==============================================
+
+Take an existing file which is tracked by GIT and do some modifications.
+Commit the changes to git
+====================================================
+
+Make changes in the file--> add some content in the file
+
+Edit the file
+
+# nano file1.java
+
+Insert any data
+
+To save and exit
+
+Press CTL x
+
+press y
+
+press enter key
+
+Now check git status:
+
+# git status
+
+======================================================
+
+To check the commit history on a git repository
+==================================================
+
+# git log
+
+# git log --oneline
+
+Assignment:
+===================
+
+1. How can i find log of git commits from one date to another date
+
+--since=<date>, --after=<date>
+           Show commits more recent than a specific date.
+
+ --until=<date>, --before=<date>
+           Show commits older than a specific date.
+
+2. Move/copy/push your git log history in a new text file
+
+===============================================
+
+Take an exisitng file from local repo and 
+
+Delete it from Local repo and working directory
+
+
+# git ls-files
+
+Choose a filename to be deleted
+
+Execute the git delete command to delete a file from Local Repo and Working directory
+
+# git rm <filename>
+
+git rm file1.java
+
+File will be removed from LR and WD
+
+# git ls-files   // file will not be LR
+
+# ls                // file will not be in WD
+
+Commit the deletion of file:
+
+# git commit -m "deletion of file"
+
+# git log --oneline
+
+==================================================
+
+Revert command
+============================================
+
+1. File --> present in the LR and WD (old state1)
+
+File --> deleted the file from LR and WD (new state)
+
+we got a commit id --> commit2
+
+you want the file back
+
+git revert commit2
+
+Revert command will always work on a commit id
+
+Whatever happened in the commit will go back to its original state.
+
+
+When you execute the revert command, you are bringing back some chnages to the LR
+
+this command is doing changes to LR, so a new commit has to be created for your REVERT command/action
+
+In this cases, git will automatically create a commit, asking you to enter a message
+
+Git will open a new open a file, where you have to enter the message and save the file
+
+
+
+Execution:
+===================================
+
+Step 1: Check the commit id that you want to revert
+
+take the deletion commit id
+
+# git log --oneline
+
+copy the seven digits
+
+c9bf927
+
+Step 2: Execute the revert command
+
+# git revert c9bf927
+
+press enter key, it will open a nano editor file
+
+asking you to insert some message
+
+Save the file:  press CTL x ==> press y ==> press enter key
+
+Step 3: fiel will be abck in LR and WD
+
+git ls-files
+
+ls
+
+=================================================
+
+.gitignore
+=========================================
+
+In a working directory we will have files which can be shread with others like out source code file, scripts
+
+But we can also have extra files in our workign directory like : .txt files, .xml files, .log file, .class files, test data files
+
+These extra files we dont want them to be version controlled, then we can ask git to ignore them
+
+This concept of ignoreing the files by git is applicable only to new files
+
+Files with status as UNTRACKED.
+
+This concept is performed by creating a file with name as .gitignore
+
+File name will ramin same, its a hidden file, it has no extension
+
+In this file we will write names of the files that we want to ignore
+As you will save the file. git will not be bothered about the files that you are ignoring
+Git will not prompt your for adding them to LR
+
+Ignored files  Files will be present in the Working directory
+
+
+
+Step 1: Create some files that we will ignore
+
+# touch file.txt file2.xml file3.log file4.class
+
+Step 2: Check the status of the files in GIT
+
+# git status
+
+files will be untracked, git is suggesting to add and commit them in local  repo
+
+Step 3: We do not want to add them or commit them, we want to ignore these files
+
+# nano .gitignore
+
+insert below text
+
+*.txt
+*.log
+*.xml
+*.class
+
+Save the file and exit
+
+press CTL x and press y  and press enter key
+
+
+In this file add names of the files to be ignored
+In this file names will added, 1 filename 1 line
+Suppose you want to ignore all xml files or all .class files, so entry in the file cna be made like
+
+*.xml
+*.class
+file.txt
+*.txt
+
+As you will save the file, git will start ignoring all the files
+
+
+
+Step 4: Check the status now and commit .gitignore file
+
+
+# git status
+
+# git add .
+
+# git commit -m "done .gitignore"
+
+
+======================================================
+
+Remote repository:
+=======================================================
+
+Creation of github account:
+===================================================
+
+Step2: Connect the SL lab to the github account so that we can push the data from local repo to remote repo
+
+
+On the lab terminal:
+====================================
+Execute the command to generate SSH keys
+
+
+
+Password less authentication between git(lab) and github servers --> SSH method
+
+2 servers have to communicate we also have an authentication method of SSH
+
+SSH command will generate public key and priavte key
+
+copy public key on github account and save it
+
+after this you can communicate with github from your lab terminal with any username or password
+
+
+Execution:
+============================
+
+Step 1: generate SSH keys:
+
+Go to lab terminal
+
+# cd
+
+# ssh-keygen
+
+dont enter any thing.. just keep pressing enter for 3 times
+
+You key will generated
+
+The public key can be seen by exeucting below commad:
+
+# cat /root/.ssh/id_rsa.pub
+
+Step 2:
+
+Copy the key carefully
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7MWRf5oD4jXnFIvIfpZlBvUpb/fiR3WpFiAnZJZ7hYeD7G+WPKjQ5FaYTl7m6g+h4kSwa1VwyoMnjBm/+rdc3r1nVH+HujpBxa39+5tM0pYHFNP/UOc1dqWpOjAZlM3j5OuoTNvBZqZ+vvQ5XQGXHXlk5MtOjxO91rEOqpWuqYewXT9L535vprwavlOKKAEpIKKyNXCITSc4kTiLz9uSVS9utDEnByI9ohYK83DxGcPK2gNlie6vgaM9IdFeTRgJ+538QmzHiHAwAhcRcPBjIRCRisWWiRL6HpYs0e5l1Z1CtHwC2VAb4Ui5vXDmXSP/kPZtWGCEwsX6RLKmonZE7 root@ip-172-31-22-237
+
+Step 3: paste it on git hub
+
+Step 4: Create a remote repository
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

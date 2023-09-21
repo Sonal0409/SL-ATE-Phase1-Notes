@@ -347,6 +347,193 @@ Step 3: paste it on git hub
 
 Step 4: Create a remote repository
 
+===================================
+
+
+Pull command
+==================================
+This operation is perfmoed on local git repo to get the files and commits from remote repo
+
+git pull origin master
+
+
+This command will perform 2 operations
+
+1. fetch the changes form remote to local repo ---> it places the chnage sina  file called FETCH_HEAD
+ 
+2. Adds the files into local repo and WD. also updates commit history
+
+Fetch command:
+=================================
+
+If we want to just fetch the changes from remote repo into our local repo
+to check if there are new changes in remote which are not in my local branch
+
+Then we can use fetch command/operation
+
+This command will perform 1 operation
+
+1. fetch the changes from remote to local repo ---> it places the changes in a   file called FETCH_HEAD in .git folder
+
+2. This command will not copy your files into local repo and WD. doesnot update commit history
+
+
+Merge command:
+==================================
+
+works on local repository- in between you branches
+
+
+1. How many branches we have it git. And then create a branch in git
+
+   # git branch
+
+Create a branch
+
+   # git branch feature1  
+   # git branch
+  
+
+2. switch to branch
+
+  # git checkout feature1
+
+3. Create some new commit on the new branch feature1
+
+  # touch feature1file featurefile2
+  # git add .
+  # git commit -m "done on feature1"
+
+4. Switch to master branch
+
+  # git checkout master
+
+5. merge the new branch to master branch
+
+  # git merge feature1 master
+
+=========================================
+
+delete the branch feature1
+
+# git branch -d fetaure1
+
+Delete the commit history, so that i create new commit history to understand rebasing strategy
+
+# git log --oneline
+
+# git reset --hard <last commitid>
+
+# git status
+
+# git add .
+
+# git commit -m "done"
+
+==> git log --oneline ==> only 2 commit must be there.
+
+
+====================================
+Rebase Command: merging strategy
+============================
+
+1. Create a new branch feature1 (base of which is master) and switch to the branch 
+
+# git branch
+
+#  git checkout -b feature1
+
+2. create new commits on feature 1 branch
+
+  # touch file-feature
+  # git add .
+  # git commit -m "done on feature"
+
+3. switch to master and create new commits
+
+  # git checkout master
+
+    # touch file-master
+  # git add .
+  # git commit -m "done on master"
+
+4. No merging of feature1 on master -Done
+
+5. Switch back to feature1 and do rebase command (re organize the base branch commits)
+
+# git rebase master
+
+==============================================
+
+Lesson end project
+=============================================
+
+Come out of current directory:
+
+# cd
+
+Create a directory with includes  the files:
+
+# mkdir 
+
+
+
+=================================
+
+Introduction to JAVA programming
+===================================
+
+learn only that much of java that will help to become an expert in Selenium
+
+Java -> Object oriented programming lanaguage
+Everything in java is an Object
+Java is platform independent language
+Java -> compile and interpret the code
+Convert it into machine understandable code (binary file -> .class file)
+Execute it to show output
+Java files are stored with extension .java
+3 steps:
+Write the program
+Compile it
+Run the program
+Java is a secured language
+================================
+For writing any kind of code, We use various editor (java based) 
+These editors help us in writing the code, syntax check, execution of the code
+Eclipse or intellij -> java and maven and selenium
+pycharm or atom editor
+VSCode
+
+In the Eclipse editor, we will find java libraries, that will help us write the code
+We will create Java code ==> java code is written in a java class
+================================
+		
+Always create a java project first
+		
+A project can have multiple packages		
+The name of a package should begin with lower case		
+A package can have multiple classes		
+Name of a Class should begin with uppercase		
+classname with same package should be unique		
+
+======================
+
+Create a Project in Eclipse	"File-->New-->go to Project or Other --> select project --> sleect java folder--> select java project
+Give the Project name
+Click on Finish button
+Java project will be created in eclipse"
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

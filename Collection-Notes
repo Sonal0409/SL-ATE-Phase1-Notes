@@ -1,0 +1,45 @@
+Array
+"Can store multiple values
+of any datatypes - primitive and non primitive "
+Can store signle type of data
+Array size fixed
+"sortdata, add the data or delete
+There no methods to do that. You have write the algorithm for these operation"
+
+Collection Framework
+Store non-primitive data
+It can store different types of data
+Size is dynamic
+Comes with pre-defined methods for add, delete, sort, contains
+"Collection: An entity or an Object which store multiple data
+Collection framwork: java gives set og libraries, classes and interfaces That helps us to store of data"
+
+ArrayList  - Class
+"It is a class which is inheriting methods of List Interface of java
+List interface --> implements--> Collection interface"
+All of these interfaces and classes ar epresnet in java package -> java.util
+Array list is a class that will help to store multiple data. 
+The size of arraylist is growable
+"Arraylist also store values using the index
+Index-based data structure -> like an array"
+"Array will store -> single datatype
+Array list is hetrogenous-> different dataype values can be stored"
+Duplicate values can be stored in the array list
+any number of Null values can be stored
+It follows insertion order and also follows an index order to fect the data
+It provides methods to perform operation like insert, delete, search
+
+
+Linked List
+Linked list is a class implementing methods of List interface and deque interface.
+List interface inherity Collection interface
+It is part of java.util package
+The underline datastructure is doubly linked list or circular linked list
+Stores the data as a Node
+Element insertion and deletion is very fast in linked list
+We can traverse in forward and backward direction
+It is an index based datastructure like arraylist
+We can store any kind of datatype
+duplicate lements can be stored
+null values can be stored
+Doesnot sort the list

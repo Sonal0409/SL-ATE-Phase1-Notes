@@ -1,0 +1,40 @@
+Connect to mysql DB
+=============================
+In lab go to terminal --> become root user
+# sudo su -
+
+Execute below command:
+
+# mysql -u root -p
+
+It will ask to enter password:
+
+Enter password: root
+=============================
+Execute command to See databases;
+
+# show databases;
+
+Create a database:
+
+# create database animated_movies;
+
+Use the database and create a table:
+=============================
+# use animated_movies;
+
+# CREATE TABLE movies(title VARCHAR(50) NOT NULL,genre VARCHAR(50) NOT NULL,director VARCHAR(50) NOT NULL,release_year INT NOT NULL);
+
+Select the table:
+===========================
+# select * from movies;  =>empty table.
+
+Insert into the table:
+=============================
+
+ # INSERT INTO movies VALUE("Inside Out", "Comedy", "Pete Doctor", 2015);
+ # INSERT INTO movies VALUE("Toy Story 4", "Comedy", "Josh Cooley", 2019);
+
+ # select * from movies;
+
+=====================================

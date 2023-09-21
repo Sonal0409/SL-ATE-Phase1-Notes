@@ -1,0 +1,29 @@
+Download the JDBC jar file
+
+Open the browser of the lab and open this URL
+
+https://dev.mysql.com/downloads/connector/j/
+
+In the drop down select platform independent
+
+Select the second option  : Platform Independent (Architecture Independent), ZIP
+
+Click on download button
+
+on next page click on => No thanks, just start my download.
+
+Zip file will be downloaded.
+
+Now go to downloads folder of lab
+
+and right click on zip file and clickon extract here
+
+In the folder there will be a JDBC connector.jar file
+
+We have to import this file in eclipse:
+
+Go to Java project --> right click--> go to properties --> go to Java build path --> libraries path
+Click on Add external jars --> browse to downloads folder -->go to jdbc extracted folder--> select the file with name
+mysql-connector-j-8.1.0.jar
+
+Clickon apply and close

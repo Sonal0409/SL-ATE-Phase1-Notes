@@ -1,0 +1,31 @@
+package javaPrograms;
+
+public class ConstructorDemo {
+	
+	public ConstructorDemo()
+	{
+		System.out.println("This is default Constructor");
+	}
+	
+	public ConstructorDemo(int a)
+	{
+		System.out.println("This is parametrized constructor ");
+		System.out.println(" The value of variable a is :" + a);
+	}
+	
+	public ConstructorDemo(int a, int b)
+	{
+		System.out.println("This is parametrized constructor ");
+		System.out.println(" The value of variable a is :" + a);
+		System.out.println(" The value of variable a is :" + b);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		ConstructorDemo obj = new ConstructorDemo();
+		ConstructorDemo obj2 = new ConstructorDemo(10); // prameterized constructor with 1 value
+		ConstructorDemo obj3 = new ConstructorDemo(10,20); 
+	}
+
+}

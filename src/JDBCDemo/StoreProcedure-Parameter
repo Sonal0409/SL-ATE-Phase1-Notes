@@ -1,0 +1,107 @@
+
+StoredProcedure:
+=============
+
+> Stored procedures are:
+
+ > group of sql statements that perform a particular task
+
+ > they are generally created by DBA
+ 
+ > theya re created in native sql language
+
+ > They can include input and output parameters
+
+In JDBC we use callable statements to call stored procedures
+
+Syntax:
+
+CallableStatement mycall = con.prepareCall("{call procedure_name()}");
+
+mycall.execute();
+
+IN Parameters:
+==============
+
+Delimiter $$
+Create PROCEDURE changeyear_movie(IN movie_title VARCHAR(64))
+BEGIN
+UPDATE movies set release_year=1947 where title = movie_title;
+END $$
+
+Change delimiter
+
+Delimiter;
+
+In Java program:
+===================
+
+Prepare the callable statement:
+
+Callable mystmt = con.prepareCall("{call changeyear_movie(?)}");
+
+Set the parameter value for parameter movie_title
+
+mystmt.setString(1, "abc123");
+
+// now execute the statment
+
+mystmt.execute();
+
+=====================================
+package JDBCDemo;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class JDBCprocedure {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+
+		String dburl = "jdbc:mysql://localhost:3306/animated_movies";
+		String username = "root";
+		String password = "root";
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection(dburl,username,password);
+		
+		CallableStatement mystmt = con.prepareCall("{call changeyear_movie(?)}");
+		mystmt.setString(1, "Inside Out");
+		// now execute the statement
+
+		mystmt.execute();
+       System.out.println("table is updated successfully");
+       
+       mystmt.close();
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

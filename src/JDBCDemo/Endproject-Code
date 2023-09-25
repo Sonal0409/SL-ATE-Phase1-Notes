@@ -1,0 +1,49 @@
+
+
+index.html
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Welcome to my site</h1>
+<a href ="JdbcServelet">Click to display data from DB</a>
+</body>
+</html>
+
+============================================
+
+Servlet code
+
+
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		Connection con = null;
+		
+		
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				con =DriverManager.getConnection("jdbc:mysql://localhost:3306/animated_movies","root","root");
+				PreparedStatement ps = con.prepareStatement("select * from movies where title='Inside Out'");
+				ResultSet rs = ps.executeQuery();
+				
+		while(rs.next()) {
+					
+					System.out.print("Title: " + rs.getString("title") + "\t");
+					System.out.print("genre: " + rs.getString("genre") + "\t");
+					System.out.print("director: " + rs.getString("director") + "\t");
+					System.out.println("release_year: " + rs.getString("release_year"));
+				}
+		
+		           con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}

@@ -34,6 +34,8 @@ Open the terminal of lab
 
 If you are on your local machine --> eclipse
 
+https://download.eclipse.org/m2e-wtp/releases/1.4/
+
 Add these depedencies in pOM file. 
 
  <properties>

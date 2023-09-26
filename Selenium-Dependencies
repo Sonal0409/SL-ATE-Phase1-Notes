@@ -32,9 +32,14 @@ Open the terminal of lab
 
 =============================================
 
-If you are on your local machine --> eclipse
+
 
 https://download.eclipse.org/m2e-wtp/releases/1.4/
+
+<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+
+
+If you are on your local machine --> eclipse
 
 Add these depedencies in pOM file. 
 

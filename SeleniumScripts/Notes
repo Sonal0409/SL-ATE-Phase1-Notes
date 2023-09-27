@@ -101,7 +101,8 @@ Play it back as many times as you want
 Simple and easy to work with
 The log section will show test step is success or failure
 At the end in log you will get test executed successfully or it failed
-Suitable for testers who are new automation
+Suitable for testers w
+ho are new automation
 Who donot know how to write code
 
 ============================
@@ -193,6 +194,464 @@ Expand the project now
 You will see a file called --> pom.xml file
 
 Double click and open the file
+==================================================
+
+On you laptop:
+====================================================
+
+Make sure :
+
+> only 1 JAVA version should be there- preffered java version 11
+
+> Set up environment variable : JAVA_HOME and JAVA_PATH
+
+> Install eclipse for java developers 2021 -06
+
+> Create a Mavan project
+
+> Add the Dependencies in POM.xml
+
+> Create your programs.
+
+=================================
+
+=============================================
+
+HTML Page: Collection of web elements
+
+Elelments     Actions can we perform
+========================================================================
+
+TextBox : element is visible or not, enabled or not, input data(char,inte)
+
+Button : element is visible or not, enabled or not, clickable or not
+
+Link : element is visible or not, enabled or not, clickable or not
+
+DropDown: element is visible or not, enabled or not, selection, count the number of choices
+
+CheckBox : element is visible or not, enabled or not, click
+
+Radiobutton: element is visible or not, enabled or not, click
+
+Tables,
+
+Dynamic dropdowns, Calender
+
+==========================================================
+Now we want selenium to perform the testing for us:
+
+1. Open the browser
+
+2. Enter the URL
+
+3. Maxamize the browser window
+
+4. Delete cookies of the browser
+
+5. Find the username textbox , check if it displayed or not
+
+6. Find the username textbox , check if it enabled or not
+
+7. Find the username textbox , check if you insert data init or not.
+
+5. Find the passowrd textbox , check if it displayed or not
+
+6. Find the password textbox , check if it enabled or not
+
+7. Find the password textbox , check if you insert data init or not.
+
+
+================================================
+
+We want selenium to find an element and perform an action on it
+
+How to find the address of the element?
+
+Selenium provides us Locators that will help you find the address of your element on the webpage
+
+There are total 8 locators:
+
+1. id               
+
+2. name
+
+3. linkText
+
+4. Partiallinktext
+
+5. CSS
+
+6. XPATH
+
+7. tagname
+
+8. classname
+
+
+===========================
+
+Selenium gives following syntax that you will use to provide element address in the script
+
+
+ driver.findElement(By.locatorname("value"))
+
+findElement : method
+By: class
+locatorname: locator method
+value: we get form the webpage
+===========================================
+How do we get the value:
+============================================
+1. Go to the webpage which is to tested
+
+2. select the element to be tested
+
+3. right click on the element --> click inspect
+
+4. At bottom, you will the complete document of the page--> you will be on the element tab
+
+5. You will also see a line which highlighted in blue color
+
+6. The highlighted html tag are the attributes of the element
+
+<input id="wpName2" name="wpName" size="20" class="loginText mw-userlogin-username cdx-text-input__input" placeholder="Enter your username" tabindex="1" required="" autocomplete="username">
+
+Using these attribites we will  find the locator value of the element
+
+=========================================
+
+Suppose i want to find the element using ID locator
+=============================================
+
+Element: 			locator:		value
+
+1. username  			id			wpName2
+
+2.password			id   			wpPassword2
+
+3. retype			id 			wpRetype
+
+Suppose I want to find the above element using name locator
+=============================================
+
+Element: 			locator:		value
+
+1. username			name			wpName
+  			
+2.password			name			wpPassword
+
+3. retype			name 			retype
+
+LinkText localtor
+=================================
+driver.findElement(By.linktext("org.openqa.selenium")
+
+driver.findElement(By.linktext("org.openqa.selenium.bidi.browsingcontext"))
+
+PartialLinktext locator:
+================================
+This is usefull, when you ahve links with unique text and links have longer text
+then we can use partial link text
+
+driver.findElement(By.partialLinktext("selenium");
+
+
+driver.findElement(By.partialLinktext(".browsingcontext"))
+
+=============================================
+
+
+XPATh Functions:
+
+===================
+
+Regualr xpath:
+
+//tagname[@attribute='exactvalue']
+
+1. starts-with()
+
+//tagname[starts-with(@attribute,'startingtextvalue')]
+
+here we will proivde the starting value of the attribute
+
+for example:
+
+attribute ==> name = name8ca553fc
+
+nameb7cb2d8b
+
+//tagname[starts-with(@name,'login')]
+
+2. contains()
+
+attribute ==> name = login8ca553fc
+
+//tagname[contains(@attribute,'anytextvalue')]
+
+// input[contains(@name,'login')]
+
+3. text() --> used for link elements
+
+//tagname[text()='value']
+
+<a>log in </a>
+
+//a[text()='log in']
+
+<a class="blog-pager-newer-link" href="http://seleniumpractise.blogspot.com/2016/08/how-to-handle-autocomplete-feature-in.html" id="Blog1_blog-pager-newer-link" title="Newer Post">Newer Post</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

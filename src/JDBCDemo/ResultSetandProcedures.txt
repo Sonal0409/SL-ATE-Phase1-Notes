@@ -1,0 +1,556 @@
+
+Create Database
+
+The CREATE DATABASE statement is used for creating a new database. The syntax is −
+
+SQL> CREATE DATABASE DATABASE_NAME;
+
+
+Drop Database
+The DROP DATABASE statement is used for deleting an existing database. The syntax is −
+
+SQL> DROP DATABASE DATABASE_NAME;
+
+Create Table
+The CREATE TABLE statement is used for creating a new table. The syntax is −
+
+CREATE TABLE Employees
+(
+   id INT NOT NULL,
+   age INT NOT NULL,
+   first VARCHAR(255),
+   last VARCHAR(255),
+   PRIMARY KEY ( id )
+);
+
+
+Drop Table
+The DROP TABLE statement is used for deleting an existing table. The syntax is −
+
+SQL> DROP TABLE table_name;
+
+
+INSERT Data
+The syntax for INSERT, looks similar to the following, where column1, column2, and so on represents the new data to appear in the respective columns −
+
+SQL> INSERT INTO table_name VALUES (column1, column2, ...);
+
+SQL> INSERT INTO Employees VALUES (100, 18, 'Zara', 'Ali');
+
+
+The SELECT statement is used to retrieve data from a database. The syntax for SELECT is −
+
+SQL> SELECT column_name, column_name, ...
+     FROM table_name
+     WHERE conditions;
+
+SQL> SELECT first, last, age 
+     FROM Employees 
+     WHERE id = 100;
+
+UPDATE Data
+The UPDATE statement is used to update data. The syntax for UPDATE is −
+
+SQL> UPDATE table_name
+     SET column_name = value, column_name = value, ...
+     WHERE conditions;
+
+UPDATE Employees SET age=20 WHERE id=100;
+
+DELETE Data
+The DELETE statement is used to delete data from tables. The syntax for DELETE is −
+
+SQL> DELETE FROM table_name WHERE conditions;
+
+DELETE FROM Employees WHERE id=100;
+
+
+==================================
+
+ResultSet Interface is present in the java.sql package. 
+It is used to store the data which are returned from the database table after the execution of the SQL statements in the Java Program. 
+The object of ResultSet maintains cursor point at the result data. In default, the cursor positions before the first row of the result data.
+
+The next() method is used to move the cursor to the next position in a forward direction.
+
+It will return FALSE if there are no more records.
+
+****
+
+ It retrieves data by calling the executeQuery() method using any of the statement objects. It may be Statement or PreparedStatement or CallableStatement object.
+
+
+PreparedStatement, and CallableStatement interfaces are the sub-interfaces of the Statement interface
+
+
+Statement Interface
+
+Statement statemnt1 = conn.createStatement();
+ResultSet rs1 = statemnt1.executeQuery(“Select * from EMPLOYEE_DETAILS”);
+
+
+OR
+
+PreparedStatement pstatemnt1 = conn.prepareStatement(insert_query);
+ResultSet rs1 = pstatemnt1.executeQuery(“Select * from EMPLOYEE_DETAILS”);
+
+We can use getX() method to get the data of the columns while iterating through the results where X – is the datatype of the column. We can use either Column Names or Index to get the values using getX() methods.
+
+X can be INT, String etc  -> getInt(), getString()
+
+
+while(rs1.next())
+{
+    int empNum = rs1.getInt("empNum");
+    String lastName = rs1.getString("lastName");
+    String firstName = rs1.getString("firstName");
+    String email = rs1.getString("email");
+    String deptNum = rs1.getString("deptNum");
+    String salary = rs1.getString("salary");
+    System.out.println(empNum + "," +lastName+ "," +firstName+ "," +email +","+deptNum +"," +salary);
+}
+
+We can also mention index number of the Column instead of Column Name in the getX() methods.
+
+while(rs1.next())
+{
+    int empNum = rs1.getInt(1);
+    String lastName = rs1.getString(2);
+    String firstName = rs1.getString(3);
+    String email = rs1.getString(4);
+    String deptNum = rs1.getString(5);
+    String salary = rs1.getString(6);
+    System.out.println(empNum + "," +lastName+ "," +firstName+ "," +email +","+deptNum +"," +salary);
+}
+
+
+There are 3 types in ResultSet. They are:
+================
+TYPE_FORWARD_ONLY: It is the default option, where the cursor moves from start to end i.e. in the forward direction.
+
+TYPE_SCROLL_INSENSITIVE: In this type, it will make the cursor to move in both forward and backward directions. If we make any changes in the data while iterating the stored data it won’t update in the dataset if anyone changes the data in DB. Because the dataset has the data from the time the SQL query returns the Data.
+
+TYPE_SCROLL_SENSITIVE: It is similar to TYPE_SCROLL_INSENSITIVE, the difference is if anyone updates the data after the SQL Query has returned the data, while iterating it will reflect the changes to the dataset.
+
+
+ResultSet Concurrency
+=====================
+There are 2 modes of Concurrency in ResultSet. They are:
+
+ResultSet.CONCUR_READ_ONLY: It is the default concurrency mode. We can only read the data in the ResultSet. Updation is not applicable.
+ResultSet.CONCUR_UPDATABLE: We can update the data in the ResultSet object.
+
+
+There are 4 categories of ResultSet methods. They are:
+
+Navigational Methods
+Getter Methods
+Setter Methods
+Miscellaneous Methods
+First, we will discuss the Navigational Methods and then will move further.
+
+#1) Navigational Methods
+
+This method is used to move the cursor around the dataset.
+
+Boolean absolute(int row): It is used to move the cursor to the specified row which is mentioned in the parameter and return true if the operation is successful else return false.
+
+Void afterLast(): It makes the ResultSet cursor to move after the last row.
+
+Void beforeFirst(): It makes the ResultSet cursor to move before the first row.
+
+Boolean first(): It makes the ResultSet cursor to move to the first row. It returns True if the operation is successful else False.
+
+Boolean last(): It makes the ResultSet cursor to move to the last row. It returns True if the operation is successful else False.
+
+Boolean next(): It makes the ResultSet cursor to move to the next row. It returns True if there are more records and False if there are no more records.
+
+Boolean previous(): It makes the ResultSet cursor to move to the previous row. It returns True if the operation is successful else False.
+Boolean relative(): It moves the cursor to the given number of rows either in the forward or backward direction.
+Int getRow(): It returns the current row number the ResultSet object is pointing now.
+Void moveToCurrentRow(): It moves the cursor back to the current row if it is currently in insert row.
+Void moveToInsertRow(): It moves the cursor to the specific row to insert the row into the Database. It remembers the current cursor location. So we can use the moveToCurrentRow() method to move the cursor to the current row after the insertion.
+
+JDBC ResultSet Example Program:(Using Navigational methods)
+
+package com.STH.JDBC;
+ 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+     
+public class ResultSet_Example {    
+ 
+         public static void main(String[] args) throws ClassNotFoundException {
+        // TODO Auto-generated method stub
+        //Select query 
+        String select_query = "select * from employee_details";
+         
+        Class.forName("oracle.jdbc.driver.OracleDriver");  
+        //Connecting to Oracle DB
+        try(Connection conn =
+ DriverManager.getConnection("jdbc:oracle:thin:system/pass123@localhost:1521:X
+E"))
+        {
+                //Creating DatabaseMetaData object
+                DatabaseMetaData dbmd = conn.getMetaData();
+                //Checking whether the driver supports scroll 
+sensitive type and concur updatable
+                boolean isSupportResultSetType = 
+dbmd.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_SENSITIVE,
+ ResultSet.CONCUR_UPDATABLE);
+                if(isSupportResultSetType == true)
+                {
+                // Creating prepared Statement
+                PreparedStatement pstatemnt1 = 
+conn.prepareStatement(select_query,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.
+CONCUR_UPDATABLE);
+                ResultSet rs = pstatemnt1.executeQuery();
+                //Moving the cursor to point first row
+                rs.first();
+                System.out.println("FIRST ROW \n EMP NUM = " + 
+rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                //Moving the cursor to point last row       
+         
+                                rs.last();
+                System.out.println("LAST ROW \n EMP NUM = " +
+ rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                //Moving the cursor to point before first row
+                 
+                                rs.beforeFirst();
+                System.out.println("Cursor is pointing at before the
+ first row. Use next() to move in forward direction");
+                //Moving the cursor to point first row using next()             
+                                 
+                                rs.next();
+                System.out.println("FIRST ROW \n EMP NUM = " +
+ rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                //Moving the cursor to point after last row 
+ 
+                    rs.afterLast();
+                System.out.println("Cursor is pointing at after the last row. Use previous() to move in backward direction");
+                //Moving the cursor to point last row  using previous() 
+ 
+                    rs.previous();
+                System.out.println("LAST ROW \n EMP NUM = " + 
+rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                //Moving the cursor to point third row              
+ 
+                               rs.absolute(3);
+                System.out.println("Cursor is pointing at 3rd row");
+                System.out.println("THIRD ROW \n EMP NUM = " +
+ rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                //Moving the cursor to point previous row of third row              
+ 
+                               rs.relative(-1);
+                System.out.println("Cursor is pointing to the 1 row previous to the 3rd row");
+                System.out.println("Second ROW \n EMP NUM = " + rs.getInt("empNum") + "\n LAST NAME = "+
+ rs.getString(2)+"\n FIRST NAME = " + 
+rs.getString(3));
+                //Moving the cursor to point 4th row after the 2nd row              
+ 
+                                rs.relative(4);
+                System.out.println("Cursor is pointing to the 4th row after the 2nd row");
+                System.out.println("SIXTH ROW \n EMP NUM = " +
+ rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                //Moving the cursor to point current row                
+ 
+                                System.out.println(" Current Row = " + rs.getRow());
+                 
+                }
+                 
+        }
+         
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+#2) Getter Methods
+
+ResultSet has stored the data of the table from the Database. Getter methods are used to get the values of the table in ResultSet. For that, we need to pass either column Index value or Column Name.
+
+The following are the getter methods in ResultSet:
+
+int getInt(int ColumnIndex): It is used to get the value of the specified column Index as an int data type.
+float getFloat(int ColumnIndex): It is used to get the value of the specified column Index as a float data type.
+java.sql.date getDate(int ColumnIndex): It is used to get the value of the specified column Index as a date value.
+int getInt(String ColumnName): It is used to get the value of the specified column as an int data type.
+float getFloat(String ColumnName): It is used to get the value of the specified column as a float data type.
+Java.sql.date getDate(String ColumnName): It is used to get the value of the specified column as a date value.
+There are getter methods for all primitive data types (Boolean, long, double) and String also in ResultSet interface. We can obtain an array and binary type of data also from the Database. It has methods also for that.
+
+#3) Setter/Updater Methods
+
+We can update the value in the Database using ResultSet Updater methods. It is similar to Getter methods, but here we need to pass the values/ data for the particular column to update in the Database.
+
+The following are the updater methods in ResultSet:
+
+void updateInt(int ColumnIndex, int Value): It is used to update the value of the specified column Index with an int value.
+void updateFloat(int ColumnIndex, float f): It is used to update the value of the specified column Index with the float value.
+void updateDate(int ColumnIndex, Date d): It is used to update the value of the specified column Index with the date value.
+void updateInt(String ColumnName, int Value): It is used to update the value of the specified column with the given int value.
+void updateFloat(String ColumnName, float f): It is used to update the value of the specified column with the given float value.
+Java.sql.date getDate(String ColumnName): It is used to update the value of the specified column with the given date value.
+There are Updater methods for all primitive data types (Boolean, long, double) and String also in ResultSet interface.
+
+
+============
+
+Updater methods just update the data in the ResultSet object. Values will be updated in DB after calling the insertRow or updateRow method.
+
+Updating a Row:
+
+We can update the data in a row by calling updateX() methods, passing the column name or index, and values to update. We can use any data type in place of X in the updateX method. Till now, we have updated the data in the ResultSet object. To update the data in DB, we have to call the updateRow() method.
+
+Inserting a Row:
+
+We need to use moveToInsertRow() to move the cursor to insert a new row. We have already covered this in the Navigation methods section. Next, we need to call updateX() method to add the data to the row. We should provide data for all the columns else it will use the default value of that particular column.
+
+After updating the data, we need to call the insertRow() method. Then use the moveToCurrentRow() method, to take the cursor position back to the row we were at before we started inserting a new row.
+
+ResultSet Example:
+
+package com.STH.JDBC;
+ 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+     
+public class ResultSet_Example1 {   
+ 
+       public static void main(String[] args) throws ClassNotFoundException {
+        // TODO Auto-generated method stub
+        String select_query = "select empnum,lastName,firstName from employee_details";
+        String insert_query = "insert into employee_details values(?,?,?,?,?,?)";
+        Class.forName("oracle.jdbc.driver.OracleDriver");  
+        //Connecting to Oracle DB
+        try(Connection conn = 
+DriverManager.getConnection("jdbc:oracle:thin:system/pass123@localhost:1521:XE"))
+        {
+                //Creating DatabaseMetaData object
+                DatabaseMetaData dbmd = conn.getMetaData();
+                //Checking whether the driver supports scroll insensitive type and concur updatable
+                boolean isSupportResultSetType = 
+dbmd.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_INSENSITIVE, 
+ResultSet.CONCUR_UPDATABLE);
+                if(isSupportResultSetType == true)
+                {
+                // Creating prepared Statement
+                    PreparedStatement pstatemnt1 = 
+conn.prepareStatement(select_query,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+                ResultSet rs = pstatemnt1.executeQuery(select_query);
+                //Moving the cursor to point last row of the table
+                rs.last();
+                System.out.println("LAST ROW: Before inserting new Employee");
+                System.out.println("LAST ROW: EMPNUM = " + rs.getInt(1));
+                System.out.println("\n EMP NUM = " + rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                // Setting the values to insert in the EMPLOYEE_DETAILS Table
+                              //Moving the cursor to point insert a row to table
+                rs.moveToInsertRow();
+                //Update EMPNUM value
+                rs.updateInt(1, 1017);
+                //Update LAST NAME value
+                rs.updateString(2, "Bond");
+                //Update FIRST NAME value
+                rs.updateString(3, "James");
+                //Insert a new row
+                rs.insertRow();
+                     
+                //Moving the cursor to point 5th row
+                rs.absolute(5);
+                System.out.println("Befor Updating EMPNUM of the 5th ROW");
+                System.out.println("\n EMP NUM = " + rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + 
+rs.getString(3));
+                 
+                System.out.println(" Updating EMP id of the 5th EMPLOYEE");
+                  //Updating EMPNUM of 5th row
+                rs.updateInt(1,3005);
+                rs.updateRow();
+                System.out.println("\n EMP NUM = " + rs.getInt("empNum") + "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                //Moving the cursor to point last row
+                rs.last();
+                System.out.println("LAST ROW: EMPNUM = " + rs.getInt(1));
+                System.out.println("\n EMP NUM = " + rs.getInt("empNum") +
+ "\n LAST NAME = "+ rs.getString(2)+"\n FIRST NAME = " + rs.getString(3));
+                 
+                 
+                }
+                 
+        }
+         
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+ 
+}
+
+======
+
+#4) Miscellaneous Methods
+
+void close(): It is used to close the ResultSet instance and free up the resources associated with ResultSet instance.
+ResultSetMetaData getMetaData(): It returns the ResultSetMetaData Instance. It has the information about the type and property of columns of the query output. We will learn more about ResultSetMetaData in the next section.
+ResultSetMetaData
+What is Metadata?
+
+Metadata means data about data. Using this interface, we will get more information about ResultSet. It is available in the java.sql package. Every ResultSet object is associated with one ResultSetMetaData object.
+
+This object will have the details of the properties of the columns like datatype of the column, column name, number of columns, table name, schema name, etc., We can get the ResultSetMetaData object using the getMetaData() method of ResultSet.
+
+Syntax of the ResultSetMetaData:
+
+PreparedStatement pstatemnt1 = conn.prepareStatement(insert_query);
+ResultSet rs1 = pstatemnt1.executeQuery(“Select * from EMPLOYEE_DETAILS”);
+ResultSetMetaData rsmd = rs.getMetaData();
+Important methods of ResultSetMetaData interface:
+
+Method Name	Description
+String getColumnName(int column)	It returns the column name of the particular column
+String getColumnTypeName(int column)	It returns the datatype of the particular column which we have passed as a parameter
+String getTableName(int column)	It returns the table name of the column
+String getSchemaName(int column)	It returns the schema name of the column’s table
+int getColumnCount()	It returns the number of columns of the ResultSet
+boolean isAutoIncrement(int Column)	It returns true if the given column is Auto Increment, else false
+boolean isCaseSensitive(int Column)	It returns true if the given Column is Case Sensitive, else false
+ResultSetMetaData Example
+
+package com.STH.JDBC;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+     
+public class ResultSetMetaData_Example {    
+ 
+       public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        // TODO Auto-generated method stub
+        String QUERY= " select * from employee_details";
+        Class.forName("oracle.jdbc.driver.OracleDriver");  
+        try(Connection conn = DriverManager.getConnection("jdbc:oracle:thin:system/pass123@localhost:1521:XE"))
+        {
+                Statement statemnt1 = conn.createStatement();
+                ResultSet rs1 =null;
+                rs1 = statemnt1.executeQuery(QUERY); 
+                ResultSetMetaData rsmd = rs1.getMetaData();
+                System.out.println(" We are using ResultSetMetaData ");
+                System.out.println("No: of Columns: "+ rsmd.getColumnCount());
+                System.out.println("ColumnName of  Column 1: "+ rsmd.getColumnName(1));
+                System.out.println("Data Type of Column 2: " + rsmd.getColumnTypeName(2));
+                System.out.println("Table Name of the Column 1: " + rsmd.getTableName(1));
+                System.out.println("Schema Name of the Column 1: " + rsmd.getSchemaName(1));
+                 
+    }
+}
+}
+
+
+===========================
+
+Procedure Example:
+====================
+In, out and inout parameters of procedure:
+
+CREATE PROCEDURE `summary_report`(
+        IN title VARCHAR(45),
+        OUT totalBooks INT,
+        OUT totalValue DOUBLE,
+        INOUT highPrice DOUBLE
+    )
+BEGIN
+    DECLARE maxPrice DOUBLE;
+     
+    SELECT COUNT(*) AS bookCount, SUM(price) as total
+        FROM book b JOIN author a ON b.author_id = a.author_id
+        AND b.title LIKE CONCAT('%', title, '%')
+    INTO totalBooks, totalValue;
+     
+     
+    SELECT MAX(price) FROM book WHERE price INTO maxPrice;
+     
+    IF (maxPrice > highPrice) THEN
+        SET highPrice = maxPrice;
+    END IF;
+END
+
+===============
+
+This stored procedure has 4 parameters:
+IN title VARCHAR(45): input parameter. The procedure searches for books whose titles contain the words specified by this parameter.
+OUT totalBooks INT: The procedure counts total of the matching books and stores the value into this output parameter.
+OUT totalValue DOUBLE: The procedure counts total value of the matching books and stores the value into this output parameter.
+INOUT highPrice DOUBLE: This is both input/output parameter. The procedure selects the max price in all books and if it is greater than the parameter value, assigns it to the parameter.
+Now, let’s see how to execute this stored procedure using JDBC code.
+To retrieve the values of the OUT and INOUT parameters, JDBC requires these parameters must be registered before calling the procedure, by invoking the following method on CallableStatementobject:
+void registerOutParameter(int parameterIndex, int sqlType)
+
+For example, the following code registers 3 output parameters for the procedure summary_report above:
+
+CallableStatement statement = conn.prepareCall("{call summary_report(?, ?, ?, ?)}");
+ 
+statement.registerOutParameter(2, Types.INTEGER);
+statement.registerOutParameter(3, Types.DOUBLE);
+statement.registerOutParameter(4, Types.DOUBLE);
+
+
+
+Creating a Stored Procedure from Java program:
+==================================
+Besides using a database tool like MySQL Workbench, we can create a stored procedure from within a Java program by executing the “CREATE PROCEDURE” SQL statement, just like executing a normal SQL statement.
+The following Java program creates a simple MySQL stored procedure called delete_book which removes a row from the table book based on the specified book ID:
+
+
+import java.sql.*;
+public class StoredProcedureCreateExample {
+ 
+    public static void main(String[] args) {
+        String dbURL = "jdbc:mysql://localhost:3306/booksdb";
+        String user = "root";
+        String password = "P@ssw0rd";
+ 
+        try (
+            Connection conn = DriverManager.getConnection(dbURL, user, password);
+ 
+            Statement statement = conn.createStatement();
+        ) {
+ 
+            String queryDrop = "DROP PROCEDURE IF EXISTS delete_book";
+ 
+            String queryCreate = "CREATE PROCEDURE delete_book (IN bookID INT) ";
+            queryCreate += "BEGIN ";
+            queryCreate += "DELETE FROM book WHERE book_id = bookID; ";
+            queryCreate += "END";
+ 
+            // drops the existing procedure if exists
+            statement.execute(queryDrop);
+ 
+            // then creates a new stored procedure
+            statement.execute(queryCreate);
+ 
+            statement.close();
+ 
+            System.out.println("Stored procedure created successfully!");
+ 
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+

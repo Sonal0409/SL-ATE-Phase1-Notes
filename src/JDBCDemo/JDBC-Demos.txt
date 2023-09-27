@@ -1,0 +1,441 @@
+
+JDBC - Phse1
+
+Connect to mysql DB
+=============================
+In lab go to terminal --> become root user
+# sudo su -
+
+Execute below command:
+
+# mysql -u root -p
+
+It will ask to enter password:
+
+Enter password: root
+=============================
+Execute command to See databases;
+
+# show databases;
+
+Create a database:
+
+# create database animated_movies;
+
+Use the database and create a table:
+=============================
+# use animated_movies;
+
+# CREATE TABLE movies(title VARCHAR(50) NOT NULL,genre VARCHAR(50) NOT NULL,director VARCHAR(50) NOT NULL,release_year INT NOT NULL);
+
+Select the table:
+===========================
+# select * from movies;  =>empty table.
+
+Insert into the table:
+=============================
+
+ # INSERT INTO movies VALUE("Inside Out", "Comedy", "Pete Doctor", 2015);
+ # INSERT INTO movies VALUE("Toy Story 4", "Comedy", "Josh Cooley", 2019);
+
+ # select * from movies;
+
+=====================================
+
+Download the JDBC jar file
+
+Open the browser of the lab and open this URL
+
+https://dev.mysql.com/downloads/connector/j/
+
+In the drop down select platform independent
+
+Select the second option  : Platform Independent (Architecture Independent), ZIP
+
+Click on download button
+
+on next page click on => No thanks, just start my download.
+
+Zip file will be downloaded.
+
+Now go to downloads folder of lab
+
+and right click on zip file and clickon extract here
+
+In the folder there will be a JDBC connector.jar file
+
+We have to import this file in eclipse:
+
+Go to Java project --> right click--> go to properties --> go to Java build path --> libraries path
+Click on Add external jars --> browse to downloads folder -->go to jdbc extracted folder--> select the file with name
+mysql-connector-j-8.1.0.jar
+
+Clickon apply and close
+
+=====================
+
+Write a java program to fetch information from the database
+
+
+package jdbcdemo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Demo1FetchData {
+
+	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+		// TODO Auto-generated method stub
+		
+		// This is DB connection string
+		
+		String dburl = "jdbc:mysql://localhost:3306/animated_movies";
+		String username = "root";
+		String password = "root";
+		String query = "select * from movies";
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection(dburl,username,password);
+		Statement stmt = con.createStatement(); // execute query
+		ResultSet rs = stmt.executeQuery(query); 
+		// see the result
+	
+		while(rs.next()) {
+			
+			System.out.print("Title: " + rs.getString("title") + "\t");
+			System.out.print("genre: " + rs.getString("genre") + "\t");
+			System.out.print("director: " + rs.getString("director") + "\t");
+			System.out.println("release_year: " + rs.getString("release_year"));
+		}
+		
+		
+		
+		
+
+	}
+
+}
+
+
+In case of errors:
+> check for JAVA version on eclipse project
+> check for referenced library
+> check if correct username and passwordis given 
+
+
+============================
+
+Demo 2:Stored Procedure
+
+First change the deleimiter
+
+# Delimiter $$
+
+Now create a procedure
+================
+Create procedure SelectAllMovies()
+    -> Begin
+    -> Select * from movies;
+    -> End $$
+
+Chnage Delimiter:
+
+Delimiter ;
+
+Java program:
+======================
+
+package jdbcdemo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Demo2Procedure {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		
+		// This is DB connection string
+		
+				String dburl = "jdbc:mysql://localhost:3306/animated_movies";
+				String username = "root";
+				String password = "root";
+				String query = "Call SelectAllMovies()";
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				
+				Connection con = DriverManager.getConnection(dburl,username,password);
+				Statement stmt = con.createStatement(); // execute query
+				ResultSet rs = stmt.executeQuery(query); 
+				// see the result
+			
+				while(rs.next()) {
+					
+					System.out.print("Title: " + rs.getString("title") + "\t");
+					System.out.print("genre: " + rs.getString("genre") + "\t");
+					System.out.print("director: " + rs.getString("director") + "\t");
+					System.out.println("release_year: " + rs.getString("release_year"));
+				}
+				
+
+	}
+
+}
+
+==============================
+
+Demo 3: exception.Enclose the program in try and catch block
+
+package jdbcdemo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Demo3 {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		
+		// This is DB connection string
+		
+		String dburl = "jdbc:mysql://localhost:3306/animated_movies";
+		String username = "root";
+		String password = "root";
+		String query = "Call SelectAllMovies()";
+		
+		Connection con = null;
+		
+		try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+	con = DriverManager.getConnection(dburl,username,password);
+		Statement stmt = con.createStatement(); // execute query
+		ResultSet rs = stmt.executeQuery(query); 
+		// see the result
+	
+		while(rs.next()) {
+			
+			System.out.print("Title: " + rs.getString("title") + "\t");
+			System.out.print("genre: " + rs.getString("genre") + "\t");
+			System.out.print("director: " + rs.getString("director") + "\t");
+			System.out.println("release_year: " + rs.getString("release_year"));
+		}
+
+	}
+		
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		
+		}
+		finally {
+			con.close();
+		}
+	}	
+
+}
+
+
+======================================
+Instert data:
+
+package jdbcdemo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class InsertDemo {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		
+		String title = "Finding Nemo";
+		String genre = "Comedy";
+		String director = "Andrew Stanton ";
+		String release_year = "2003";
+		
+		String dburl = "jdbc:mysql://localhost:3306/animated_movies";
+		String username = "root";
+		String password = "root";
+		
+		
+Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection(dburl,username,password);
+		PreparedStatement ps = con.prepareStatement("insert into movies values(?,?,?,?)"); // execute query
+		ps.setString(1,title);
+		ps.setString(2,genre);
+		ps.setString(3,director);
+		ps.setString(4,release_year);
+		
+		ps.executeUpdate();
+		// see the result
+	
+	
+
+	}
+
+}
+
+
+
+
+=================================================
+
+Create, Select and drop DB
+==============================
+
+
+package jdbcdemo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class CreateDeleteDB {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		
+		
+		String dburl = "jdbc:mysql://localhost:3306/animated_movies";
+		String username = "root";
+		String password = "root";
+		String query1 = "create database mydatabase";
+		String query2 = "use mydatabase";
+		String query3 = "drop database mydatabase";
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection(dburl,username,password);
+		Statement stmt = con.createStatement(); // execute query
+	     stmt.executeUpdate(query1); 
+		System.out.println("Database mydatabase created successfully");
+		stmt.executeUpdate(query2);
+		System.out.println("Selected database: mydatabase");
+		stmt.executeUpdate(query3);
+		System.out.println("Deleted database: mydatabase");
+		stmt.close();
+		
+
+	}
+
+}
+
+
+Transaction management:
+=================================
+
+package jdbcdemo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class TransactionManagement {
+
+	public static void main(String[] args) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		String dburl = "jdbc:mysql://localhost:3306/animated_movies";
+		String username = "root";
+		String password = "root";
+		//String q1 = "create database ani1";
+		//String q2 = "use ani1";
+	       // String q3 = "CREATE TABLE m1(title VARCHAR(50) NOT NULL,genre VARCHAR(50) NOT NULL,director VARCHAR(50) NOT NULL,release_year INT NOT NULL)";
+	    String query1 = "insert into movies values('abc1','Comedy','dir2','1923')";
+		String query2 = "insert into movies values('abc23','Comedy','dir3','1926')";
+		String query3 = "update movies set director='James' where title='abc12345'";
+		String query4 = "delete from movies where title=abc1";
+		boolean flag = false;
+         
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection(dburl,username,password);
+			Statement stmt = con.createStatement(); // execute query
+			con.setAutoCommit(false);
+			stmt.addBatch(query1);
+			stmt.addBatch(query2);
+			stmt.addBatch(query3);
+			int [] result = stmt.executeBatch();
+			
+			for(int i =0; i<result.length;i++)
+			{
+				System.out.println(result[i]);
+				if(result[i]==0) {
+					flag = true;
+					break;
+				}
+			}
+			
+			if(flag==false) {
+				con.commit();
+				System.out.println("transaction successful");
+			}
+			else {
+				con.rollback();
+				System.out.println("transaction Failure");
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("check the steps");
+		}
+		
+		
+		
+
+	}
+
+}
+
+
+========================================
+
+End project Servlet:
+=======================================
+
+response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		Connection con = null;
+		
+		
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				con =DriverManager.getConnection("jdbc:mysql://localhost:3306/animated_movies","root","root");
+				PreparedStatement ps = con.prepareStatement("select * from movies");
+				ResultSet rs = ps.executeQuery();
+				
+		while(rs.next()) {
+					
+					System.out.print("Title: " + rs.getString("title") + "\t");
+					System.out.print("genre: " + rs.getString("genre") + "\t");
+					System.out.print("director: " + rs.getString("director") + "\t");
+					System.out.println("release_year: " + rs.getString("release_year"));
+				}
+		
+		           con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+	}

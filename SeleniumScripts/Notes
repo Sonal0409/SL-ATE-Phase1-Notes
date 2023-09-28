@@ -214,7 +214,13 @@ Make sure :
 > Create your programs.
 
 =================================
+> Understand the topic, asks question
 
+> execute the scenario
+
+if any issue, keep the prgram aside --> proceeed to the next one.
+
+trouble shooting at the end 12.45 to 1.30pm
 =============================================
 
 HTML Page: Collection of web elements
@@ -366,7 +372,7 @@ XPATh Functions:
 
 ===================
 
-Regualr xpath:
+Regualr xpath expression:
 
 //tagname[@attribute='exactvalue']
 
@@ -401,6 +407,145 @@ attribute ==> name = login8ca553fc
 //a[text()='log in']
 
 <a class="blog-pager-newer-link" href="http://seleniumpractise.blogspot.com/2016/08/how-to-handle-autocomplete-feature-in.html" id="Blog1_blog-pager-newer-link" title="Newer Post">Newer Post</a>
+
+====================================
+Xpath Axis
+====================================
+
+Suppose an Xpath is returning multiple tags and you want to choose a single in it
+
+Then you can use a new methods
+
+driver.findElements(By.xpath("//tagname[@attribute='value']")).get(1)
+
+driver.findElements(By.xpath("//tagname[@attribute='value']")).get(2)
+
+OR
+
+driver.findElement(By.xpath((//tagname[@attribute='value'])[1]))
+driver.findElement(By.xpath((//tagname[@attribute='value'])[2]))
+
+
+//tagname[@attribute='value']/axisName::tagname[index]
+
+======================================
+
+
+XPATH Axis: It is a process in which you will travel from one tag to reach your desired element tag 
+
+syntax:  //tagname[@attribute='value]/axisName::tagname
+
+travel downwards in the document we have axis like:
+======================
+> child ==> find the child tags of parent tags
+> descendant ==> find the child and grandchild tags of parenet tag
+> following ==> find all the tags after the parent tag has closed
+
+Example:
+
+Pareent node/current node:  (//div[@class='cell'])[3]
+
+Child tag : (//div[@class='cell'])[3]/child::*
+
+Descendant tag: (//div[@class='cell'])[3]/descendant::*
+
+<html>
+ <tbody>
+  <tr1>
+    <td1> </td1>
+     <input>  </input>
+    <td2> </td2>
+      <input>  </input>
+ </tr1>
+ <tr2>
+    <td1> </td1>
+      <input>  </input>
+   <td2> </td2>
+     <input>  </input>
+ </tr2>
+ <tr3>
+   <td1> </td1>
+      <input>  </input>
+   <td2> </td2>
+     <input>  </input>
+ </tr3>
+</tbody>
+</html>
+
+//tbody[attribut='value]/descendant::td1[1]
+
+//tbody[attribut='value]/descendant::input[2]
+
+self	return the same current tag
+child	will return all the children of the current node
+parent	Will retrun the parent tag of the current node
+ancestor	selects all the ancestors of the context node
+ancestor-or-self	selects all the ancestors of the context node and itself
+descendant	will return all the children and grandchildren of the current node
+descendant-or-self	will return all the children of the current node and itself
+following	will return all the nodes that apppear after the current node
+following-sibling	"will return all the nodes that have :
+1. same parent as the current node
+2. appear after the conext node"
+preceding	will return all the nodes that appear before parent  of the context node and travelling through the root node
+preceding sibling	"will return all the nodes that have :
+1. same parent as the current node
+2. appear before the conext node"
+
+
+
+
+
+
+
+
+
+
+==========================================
+
+CSS Locator:
+=======================================
+
+tagname and id attribute
+
+Here # represent id attribute
+
+CSS locator : tagname#idvalue
+
+input#email
+
+
+2. tag[attribute='value']
+input[name='pass']
+
+3. tag.classattributevalue[attribute='value']
+
+here . represent class attribute value
+
+input.sc-jlyJG kxRJeL[id='src']
+
+4. Inspect the element --> rightclick on the element atrribut --> copy --> copy selector
+
+#src
+
+5. #idattributevalue
+
+6. contains() function--> used to fetch text of the element
+
+syntax=>  tagname:contains('text value')
+
+OR use absolute CSS Selector path
+
+#userlogin2 > div > div.mw-htmlform-field-HTMLTextField.loginText.mw-userlogin-username.mw-ui-vform-field > label
+
+
+
+
+
+
+
+
+
 
 
 

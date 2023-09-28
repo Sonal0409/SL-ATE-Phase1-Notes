@@ -1,0 +1,30 @@
+package seleniumScripts;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class BootstrapModalDialogueBox {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+        WebDriver driver = new ChromeDriver();
+		
+		driver.manage().window().maximize();
+		
+		driver.get("https://www.flipkart.com/");
+		
+		Thread.sleep(1500);
+		
+		// enter the mobile number on dialogue box
+		
+		driver.findElement(By.xpath("//div[@class='_3skCyB']/descendant::input[1]")).sendKeys("353454646");
+		
+		// click on cross button
+		
+		driver.findElement(By.xpath("//div[@class='JFPqaw']/descendant::span[1]")).click();
+
+	}
+
+}

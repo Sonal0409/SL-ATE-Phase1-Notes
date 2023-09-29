@@ -1,0 +1,12 @@
+FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+    .withTimeout(Duration.ofSeconds(10))
+          .pollingEvery(Duration.ofSeconds(5)).ignoring(NoSuchElementException.class);
+          WebElement element = wait.until(new Function<WebDriver, WebElement>() 
+
+
+     {
+   public WebElement apply(WebDriver driver) {
+   WebElement element = driver.findElement(By.xpath(""""));
+   return element;
+   }
+     });"

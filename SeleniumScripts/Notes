@@ -542,6 +542,335 @@ OR use absolute CSS Selector path
 
 
 
+Wait time in selenium:
+=======================
+
+Waittime help selenium script to be in sync with you application
+
+If our application is takign time to load
+
+or
+
+If elements on the page are taking time to load
+
+Then we have to add waititimes in the script
+
+So that script waits for element/page to be available and then perform the action. In this way script will work wothout any issues.
+
+Various kinds of wait time:
+===============================
+
+Java --> Thread.sleep(5000);
+
+Selenium:
+
+Implicit wait:
+// Implicit wait is written in the beginning of the script after we open the URL
+		// here selenium is going to wait for full 3 seconds before throwing an error that element not found
+		// Even if elements are visible on the webpage, selenium will wait for 3 seconds
+
+
+
+Explicit wait:
+============================
+
+In this type of wait there are 2 conditions:
+
+1. Explicitly wait for the element to be visible and if it is visible then perform the action
+2. If element is not visible then continue to wait for given duration
+
+If the condition is satisfied even before the duration is complete, selenium will go ahead and perform the action
+Selenium will continue to exeucte the script.
+
+To implement this we use:
+
+WebDriverWait --> create an object of this class
+until(ExpectedConditions.visibilityofElement(e1))
+wait frot he duration to complete--> throw the error 
+
+Fluent wait:
+=============================
+
+FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+    .withTimeout(Duration.ofSeconds(10))
+          .pollingEvery(Duration.ofSeconds(5)).ignoring(NoSuchElementException.class);
+          WebElement element = wait.until(new Function<WebDriver, WebElement>() 
+
+
+     {
+   public WebElement apply(WebDriver driver) {
+   WebElement element = driver.findElement(By.xpath(""""));
+   return element;
+   }
+     });"
+
+===============================
+
+Selenium cannot interact with desktop applicaions
+
+If we have to upload files from a windows laptop thenw e ahve to integrate selenium with AutoIT
+
+AutoIT tool lets you write a script --> compile the scripts , using which we  will handle and interact with desktop application
+
+First selenium will work on webpage
+
+Then we give control to autoIT tool to perform the desktop related action
+
+===================
+
+As part of thsi scenario: we will go to
+
+
+https://www.autoitscript.com/site/autoit/downloads/
+
+1. Download autoIT
+
+https://www.autoitscript.com/site/autoit/downloads/
+
+2. Then on the same page you will click on AutoIt Script Editor.
+
+We need to write the script
+
+On your windows machine search for editor-> scite
+
+It will open the editor:
+
+ControlFocus("Open","","Edit1")
+ControlSetText("Open","","Edit1","C:\Users\sonal\Documents\ATE-Phase1-SL\JDBCconnectivity.png")
+ControlClick("Open","","Button1")
+
+
+To find the element--> on windows machine --> search for tool AutoIT windows info --> open it
+
+drag the finder tool on the text box. itwill show details in box: class and instance
+
+so element location is : classinstance => Edit1
+
+Similarly for open button ==> it is Button1
+
+======================
+
+Once the script is ready, save the script on your windows machine
+
+Right click on the script --> clcik on Show more options  and select compile the script.
+
+A compiled file will be available in the folder.
+================
+
+This compiled file will be executed in selenium script
+
+Give this code
+
+Runtime.getRuntime().exec("C:\\Users\\sonal\\Desktop\\AutiitScripts\\Scriptupload3.exe");
+========================================
+Selenium Integrationw ith SikuliX
+========================================
+
+
+This will not work with Maven project
+
+You have to use a Java project
+
+In this project add the selenium jar files
+
+you cannot execute it on you lab machine
+
+It has to be done on windows laptop
+
+We will go to this page https://launchpad.net/sikuli/+download
+
+And download the jar file -->  sikulixide-2.0.5.jar (md5)
+
+Add this jar file to Java project --> go to build path--> select class path --> add the jar --> apply and close
+
+
+
+Sikuli interacts with the windows application via images
+
+Which ever element we have to test on desktop application, we have to take an image of it-> using anipping tool
+
+and feed this image to sikuli tool methods
+
+What ever is on the image it will perofrm that action on webpage
+
+
+So change the resultion of your desktop
+
+go to desktop--> right clik-->display settings --> resolution --> 1280 * 720
+
+After this .. take snapshots of the application
+
+Save the snapshots at a folder
+
+And then pass it to selenium script
+
+Make sure the file to be uploaded shoudl also have resolution same as 1280 * 720
+
+
+=============================================
+
+You are asked to build an online travel booking website. This website should have various web elements to handle the inputs given by a user.
+
+
+The Following Requirements Should Be Met: 
+
+Create a Java/Maven Project. 
+
+Add the jar files of the Selenium or dependencies. 
+
+Open the browser and locate the web elements using Locators.  -- Script 1
+
+Create a page object design pattern class to store the web elements of a webpage.  -- not required- SKIP it
+
+Install and configure AutoIT. 
+
+Open the SciTE editor and write the script to select the file from the desktop. 
+
+Save the AutoIT script as .au3 format and compile it. 
+
+Create a class to upload the file by calling .au3 script. 
+
+Create a class to handle web elements. (mouse hover script)
+
+Create a class to handle external elements.  (Alerts)
+
+Create a table in SQL – for product data. 
+
+Create a DB connection class to initiate a JDBC connection. 
+
+Create a class for Screenshot. (screenhot code)
+
+Run the project.  -- not required- SKIP it
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

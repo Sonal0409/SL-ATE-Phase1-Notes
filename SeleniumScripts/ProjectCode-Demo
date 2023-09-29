@@ -36,17 +36,46 @@ WebDriver driver = new ChromeDriver();
 		driver.manage().deleteAllCookies();
 		
 		driver.get("https://www.redbus.com/");
-		// capture the list of value and add to the text box
-		driver.findElement(By.xpath("//div[@class='main-wrapper search-box-wrapper']/descendant::input[1]")).sendKeys("Paris");
+
+// Updated code -> SONAL MITTAL
+
+		// Clear the source text box
 		
-		// capture the list of value and add to the text box
-		driver.findElement(By.xpath("//div[@class='main-wrapper search-box-wrapper']/descendant::input[2]")).sendKeys("London, United Kingdom");
+		driver.findElement(By.xpath("//div[@class='main-wrapper search-box-wrapper']/descendant::input[1]")).clear();
+	
+	// enter input string in text box
 		
-	   JavascriptExecutor js = ((JavascriptExecutor)driver);
+	driver.findElement(By.xpath("//div[@class='main-wrapper search-box-wrapper']/descendant::input[1]")).sendKeys("Paris");
+				
+				Thread.sleep(5000);
+				// capture element form the list
+		driver.findElement(By.xpath("//div[@class='autoFill autosuggest-ul rdc-src']/descendant::li[3]")).click();
+				
+				// destination
+		driver.findElement(By.xpath("//div[@class='main-wrapper search-box-wrapper']/descendant::input[2]")).clear();
 		
-	   js.executeScript("document.getElementById('onward_cal').value='30-Sep-2023'");
+		driver.findElement(By.xpath("//div[@class='main-wrapper search-box-wrapper']/descendant::input[2]")).sendKeys("London");
+			
+		Thread.sleep(5000);
 		
-		driver.findElement(By.xpath("//*[@class='main-wrapper search-box-wrapper']/descendant::div[16]")).click();
+		driver.findElement(By.xpath("//div[@class='autoFill autosuggest-ul rdc-dest']/descendant::li[3]")).click();
+			
+		//calander
+		
+		Thread.sleep(3000);
+		
+		driver.findElement(By.id("date-box")).click();
+		
+		Thread.sleep(5000);
+		
+		//Select date
+		
+		driver.findElement(By.xpath("//div[@class='DatePicker__CalendarContainer-sc-1x9sb82-0 bkhtIz']/descendant::span[41]")).click();
+		
+				   Thread.sleep(5000);	
+				   
+				   //click on search button
+				   driver.findElement(By.id("search_butn")).click();
 
 		
 		// Upload file using autoIT
